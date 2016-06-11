@@ -1,0 +1,14 @@
+{
+    "name": "The Barrier",
+    "manifest_version": 2,
+    "description": "This is the last barrier between you and your addictions",
+    "version": "1.0",
+    "content_scripts": [
+        {
+            "matches": ["http://*/*", "https://*/*"],
+            "css": ["css/content_script.css"],
+            "js": ["js/quotes.js", "js/urls.js", "js/content_script.js"]
+        }
+    ],
+    "web_accessible_resources": ["images/ic_keyboard_arrow_left_white_48dp_2x.png", "images/ic_keyboard_arrow_right_white_48dp_2x.png"]
+}

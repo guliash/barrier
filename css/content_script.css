@@ -1,0 +1,74 @@
+.barrier_main_container {
+    width: 100%;
+    height: 100%;
+    background: black;
+    opacity: 0.95;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+.barrier_sub_container {
+    position: absolute;
+    top: 25%;
+    width: 100%;
+    height: 50%;
+    min-height: 300px;
+    min-width: 600px;
+}
+
+.barrier_mid_top_panel {
+    width: 100%;
+    height: 80%;
+    display: block;
+}
+
+.barrier_mid_bottom_panel {
+    width: 100%;
+    height: 20%;
+    display: block;
+}
+
+.barrier_left_column {
+    width: 15%;
+    height: 100%;
+    display: inline-block;
+}
+
+.barrier_mid_column {
+    width: 69%;
+    height: 100%;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.barrier_right_column {
+    width: 15%;
+    height: 100%;
+    display: inline-block;
+}
+
+.barrier_message_container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    overflow: hidden;
+}
+
+.barrier_message {
+    font-family: "Times New Roman", Times, serif;
+    font-size: 25pt;
+    color: rgba(255,255,255,.9);
+}
+
+.barrier_img_container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
