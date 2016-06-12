@@ -2,11 +2,15 @@ var currentUrl = window.location.href;
 
 shuffle(quotes);
 
+var left_image_url = chrome.extension.getURL('images/ic_keyboard_arrow_left_white_48dp_2x.png');
+var right_image_url = chrome.extension.getURL('images/ic_keyboard_arrow_right_white_48dp_2x.png');
+
 var body =
 '<div class="barrier_sub_container"> \
     <div class="barrier_mid_top_panel"> \
         <div class="barrier_left_column"> \
             <div class="barrier_img_container"> \
+                <img src="' + left_image_url + '"/> \
             </div> \
         </div> \
         <div class="barrier_mid_column"> \
@@ -16,6 +20,7 @@ var body =
         </div> \
         <div class="barrier_right_column"> \
             <div class="barrier_img_container"> \
+                <img src="' + right_image_url + '"/> \
             </div> \
         </div> \
     </div> \
@@ -26,15 +31,6 @@ var body =
 var main_container = _createElement('div', 'barrier_main_container');
 
 main_container.innerHTML = body;
-
-var left_image = _createElement('img');
-var right_image = _createElement('img');
-left_image.src = chrome.extension.getURL('images/ic_keyboard_arrow_left_white_48dp_2x.png');
-right_image.src = chrome.extension.getURL('images/ic_keyboard_arrow_right_white_48dp_2x.png');
-
-main_container.getElementsByClassName('barrier_left_column')[0].getElementsByClassName('barrier_img_container')[0].appendChild(left_image);
-
-main_container.getElementsByClassName('barrier_right_column')[0].getElementsByClassName('barrier_img_container')[0].appendChild(right_image);
 
 function _createElement() {
     var el = document.createElement(arguments[0]);
