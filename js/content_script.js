@@ -4,6 +4,10 @@ var left_image_white_url = chrome.extension.getURL('images/ic_keyboard_arrow_lef
 var right_image_white_url = chrome.extension.getURL('images/ic_keyboard_arrow_right_white_48dp_2x.png');
 var left_image_grey_url = chrome.extension.getURL('images/ic_keyboard_arrow_left_grey_48dp_2x.png');
 var right_image_grey_url = chrome.extension.getURL('images/ic_keyboard_arrow_right_grey_48dp_2x.png');
+var check_circle_light_green_url = chrome.extension.getURL('images/ic_check_circle_light_green_48dp_2x.png');
+var check_circle_dark_green_url = chrome.extension.getURL('images/ic_check_circle_dark_green_48dp_2x.png');
+var cancel_circle_light_red_url = chrome.extension.getURL('images/ic_cancel_light_red_48dp_2x.png');
+var cancel_circle_dark_red_url = chrome.extension.getURL('images/ic_cancel_dark_red_48dp_2x.png');
 
 var body =
 '<div class="barrier_sub_container"> \
@@ -25,6 +29,14 @@ var body =
         </div> \
     </div> \
     <div class="barrier_mid_bottom_panel"> \
+        <div class="barrier_left_column"> \
+        </div> \
+        <div class="barrier_mid_column"> \
+            <img id="barrier_check" class="barrier_check" src="' + check_circle_dark_green_url + '"/> \
+            <img id="barrier_cancel" class="barrier_cancel" src="' + cancel_circle_dark_red_url + '"/> \
+        </div> \
+        <div class="barrier_right_column"> \
+        </div> \
     </div> \
 </div>';
 
@@ -74,6 +86,8 @@ function main() {
 
     var left_btn = document.getElementById('barrier_left_arrow');
     var right_btn = document.getElementById('barrier_right_arrow');
+    var check_btn = document.getElementById('barrier_check');
+    var cancel_btn = document.getElementById('barrier_cancel');
 
     left_btn.addEventListener("click", function() {
         changeQuote(-1);
@@ -99,6 +113,23 @@ function main() {
     right_btn.addEventListener('mouseout', function() {
         right_btn.src = right_image_white_url;
     });
+
+    check_btn.addEventListener('mouseover', function() {
+        check_btn.src = check_circle_light_green_url;
+    });
+
+    check_btn.addEventListener('mouseout', function() {
+        check_btn.src = check_circle_dark_green_url;
+    });
+
+    cancel_btn.addEventListener('mouseover', function() {
+        cancel_btn.src = cancel_circle_light_red_url;
+    });
+
+    cancel_btn.addEventListener('mouseout', function() {
+        cancel_btn.src = cancel_circle_dark_red_url;
+    });
+
 }
 
 urls.some(function(url, i, urls) {

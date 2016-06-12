@@ -11,5 +11,7 @@
         }
     ],
     "web_accessible_resources": ["images/ic_keyboard_arrow_left_white_48dp_2x.png", "images/ic_keyboard_arrow_right_white_48dp_2x.png",
-        "images/ic_keyboard_arrow_left_grey_48dp_2x.png", "images/ic_keyboard_arrow_right_grey_48dp_2x.png"]
+        "images/ic_keyboard_arrow_left_grey_48dp_2x.png", "images/ic_keyboard_arrow_right_grey_48dp_2x.png",
+        "images/ic_check_circle_light_green_48dp_2x.png", "images/ic_check_circle_dark_green_48dp_2x.png",
+        "images/ic_cancel_dark_red_48dp_2x.png", "images/ic_cancel_light_red_48dp_2x.png"]
 }
