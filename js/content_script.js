@@ -14,17 +14,17 @@ var body =
     <div class="barrier_mid_top_panel"> \
         <div class="barrier_left_column"> \
             <div class="barrier_img_container"> \
-                <img id="barrier_left_arrow" src="' + left_image_white_url + '"/> \
+                <img id="barrier_left_arrow" src="' + left_image_white_url + '"> \
             </div> \
         </div> \
         <div class="barrier_mid_column"> \
             <div class="barrier_message_container"> \
-                <p id="barrier_message" class="barrier_message"/> \
+                <p id="barrier_message" class="barrier_message"> \
             </div> \
         </div> \
         <div class="barrier_right_column"> \
             <div class="barrier_img_container"> \
-                <img id="barrier_right_arrow" src="' + right_image_white_url + '"/> \
+                <img id="barrier_right_arrow" src="' + right_image_white_url + '"> \
             </div> \
         </div> \
     </div> \
@@ -32,8 +32,8 @@ var body =
         <div class="barrier_left_column"> \
         </div> \
         <div class="barrier_mid_column"> \
-            <img id="barrier_check" class="barrier_check" src="' + check_circle_dark_green_url + '"/> \
-            <img id="barrier_cancel" class="barrier_cancel" src="' + cancel_circle_dark_red_url + '"/> \
+            <img id="barrier_check" class="barrier_check" src="' + check_circle_dark_green_url + '"> \
+            <img id="barrier_cancel" class="barrier_cancel" src="' + cancel_circle_dark_red_url + '"> \
         </div> \
         <div class="barrier_right_column"> \
         </div> \
@@ -43,30 +43,6 @@ var body =
 var main_container = _createElement('div', 'barrier_main_container');
 
 main_container.innerHTML = body;
-
-function _createElement() {
-    var el = document.createElement(arguments[0]);
-    if(arguments.length > 1) {
-        for(var i = 1; i < arguments.length; i++) {
-            el.className += ' ' + arguments[i];
-        }
-    }
-    return el;
-}
-
-function shuffle(array) {
-    var len = array.length;
-    for(var i = 0; i < len - 1; i++) {
-        var rind = Math.floor(Math.random() * (len - i));
-        swap(array, i, rind + i);
-    }
-}
-
-function swap(array, i, j) {
-    var b = array[i];
-    array[i] = array[j];
-    array[j] = b;
-}
 
 function showQuote() {
     document.getElementById('barrier_message').innerHTML = quotes[currentQuote];
