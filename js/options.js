@@ -13,16 +13,8 @@ function render(items) {
 }
 
 function save_options() {
-    var time_input = document.getElementById('time');
-    var time = time_input.value;
-    var urls = [];
-    var urls_div = document.getElementById('urls');
-    for(var i = 0; i < urls_div.childNodes.length; i++) {
-        var child = urls_div.childNodes[i];
-        var input = child.children[0];
-        var select = child.children[1];
-        urls.push({domain: input.value, type: select.value});
-    }
+    var time = getTime();
+    var urls = getUrls();
     chrome.storage.sync.set({
         time: time,
         urls: urls
@@ -33,6 +25,23 @@ function save_options() {
             status.textContent = '';
         }, 2000);
   });
+}
+
+function getTime() {
+    var time_input = document.getElementById('time');
+    return time_input.value;
+}
+
+function getUrls() {
+    var urls = [];
+    var urls_div = document.getElementById('urls');
+    for(var i = 0; i < urls_div.childNodes.length; i++) {
+        var child = urls_div.childNodes[i];
+        var input = child.children[0];
+        var select = child.children[1];
+        urls.push({domain: input.value, type: select.value});
+    }
+    return urls;
 }
 
 function add_url(item) {

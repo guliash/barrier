@@ -115,10 +115,17 @@ function main() {
 
 }
 
-urls.some(function(url, i, urls) {
-    if(window.location.href.indexOf(url) > -1) {
-        main();
-        return true;
-    }
-    return false;
-});
+function start(items) {
+    items.urls.some(function(url, i, urls) {
+        if(url.domain && window.location.href.indexOf(url.domain) > -1) {
+            main();
+            return true;
+        }
+        return false;
+    });
+}
+
+chrome.storage.sync.get({
+    time: 5,
+    urls: []
+}, start);
