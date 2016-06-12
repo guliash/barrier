@@ -10,5 +10,6 @@
             "js": ["js/quotes.js", "js/urls.js", "js/content_script.js"]
         }
     ],
-    "web_accessible_resources": ["images/ic_keyboard_arrow_left_white_48dp_2x.png", "images/ic_keyboard_arrow_right_white_48dp_2x.png"]
+    "web_accessible_resources": ["images/ic_keyboard_arrow_left_white_48dp_2x.png", "images/ic_keyboard_arrow_right_white_48dp_2x.png",
+        "images/ic_keyboard_arrow_left_grey_48dp_2x.png", "images/ic_keyboard_arrow_right_grey_48dp_2x.png"]
 }

@@ -1,14 +1,16 @@
 var currentQuote = 0;
 
-var left_image_url = chrome.extension.getURL('images/ic_keyboard_arrow_left_white_48dp_2x.png');
-var right_image_url = chrome.extension.getURL('images/ic_keyboard_arrow_right_white_48dp_2x.png');
+var left_image_white_url = chrome.extension.getURL('images/ic_keyboard_arrow_left_white_48dp_2x.png');
+var right_image_white_url = chrome.extension.getURL('images/ic_keyboard_arrow_right_white_48dp_2x.png');
+var left_image_grey_url = chrome.extension.getURL('images/ic_keyboard_arrow_left_grey_48dp_2x.png');
+var right_image_grey_url = chrome.extension.getURL('images/ic_keyboard_arrow_right_grey_48dp_2x.png');
 
 var body =
 '<div class="barrier_sub_container"> \
     <div class="barrier_mid_top_panel"> \
         <div class="barrier_left_column"> \
             <div class="barrier_img_container"> \
-                <img id="barrier_left_arrow" src="' + left_image_url + '"/> \
+                <img id="barrier_left_arrow" src="' + left_image_white_url + '"/> \
             </div> \
         </div> \
         <div class="barrier_mid_column"> \
@@ -18,7 +20,7 @@ var body =
         </div> \
         <div class="barrier_right_column"> \
             <div class="barrier_img_container"> \
-                <img id="barrier_right_arrow" src="' + right_image_url + '"/> \
+                <img id="barrier_right_arrow" src="' + right_image_white_url + '"/> \
             </div> \
         </div> \
     </div> \
@@ -70,16 +72,33 @@ function main() {
 
     showQuote();
 
-    document.getElementById('barrier_left_arrow').addEventListener("click",
-        function() {
-            changeQuote(-1);
-        }
-    );
-    document.getElementById('barrier_right_arrow').addEventListener("click",
+    var left_btn = document.getElementById('barrier_left_arrow');
+    var right_btn = document.getElementById('barrier_right_arrow');
+
+    left_btn.addEventListener("click", function() {
+        changeQuote(-1);
+    });
+    right_btn.addEventListener("click",
         function() {
             changeQuote(1);
         }
     );
+
+    left_btn.addEventListener('mouseover', function() {
+        left_btn.src = left_image_grey_url;
+    });
+
+    right_btn.addEventListener('mouseover', function() {
+        right_btn.src = right_image_grey_url;
+    });
+
+    left_btn.addEventListener('mouseout', function() {
+        left_btn.src = left_image_white_url;
+    });
+
+    right_btn.addEventListener('mouseout', function() {
+        right_btn.src = right_image_white_url;
+    });
 }
 
 urls.some(function(url, i, urls) {
