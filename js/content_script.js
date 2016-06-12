@@ -92,11 +92,18 @@ function main() {
     left_btn.addEventListener("click", function() {
         changeQuote(-1);
     });
-    right_btn.addEventListener("click",
-        function() {
-            changeQuote(1);
-        }
-    );
+
+    right_btn.addEventListener("click", function() {
+        changeQuote(1);
+    });
+
+    cancel_btn.addEventListener("click", function() {
+        document.body.removeChild(main_container);
+    });
+
+    check_btn.addEventListener("click", function() {
+        window.location.href = "http://www.google.com/";
+    });
 
     left_btn.addEventListener('mouseover', function() {
         left_btn.src = left_image_grey_url;
