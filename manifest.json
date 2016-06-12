@@ -1,8 +1,9 @@
 {
-    "name": "The Barrier",
+    "name": "__MSG_extName__",
     "manifest_version": 2,
     "description": "This is the last barrier between you and your addictions",
     "version": "1.0",
+    "default_locale": "ru",
     "content_scripts": [
         {
             "matches": ["http://*/*", "https://*/*"],

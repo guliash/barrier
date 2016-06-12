@@ -1,0 +1,23 @@
+{
+    "extName": {
+        "message": "Барьер"
+    },
+    "options_time_label": {
+        "message": "Через сколько минут после закрытия предупреждения показать ещё раз?"
+    },
+    "options_add_button": {
+        "message": "Добавить сайт"
+    },
+    "options_save_button": {
+        "message": "Сохранить"
+    },
+    "options_delete_site_button": {
+        "message": "Удалить"
+    },
+    "options_site_placeholder": {
+        "message": "Сайт"
+    },
+    "options_saved": {
+        "message": "Настройки сохранены"
+    }
+}

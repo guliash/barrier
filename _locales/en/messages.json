@@ -1,0 +1,23 @@
+{
+    "extName": {
+        "message": "The Barrier"
+    },
+    "options_time_label": {
+        "message": "When to show next time after closing the warning?"
+    },
+    "options_add_button": {
+        "message": "Add site"
+    },
+    "options_save_button": {
+        "message": "Save"
+    },
+    "options_delete_site_button": {
+        "message": "Delete"
+    },
+    "options_site_placeholder": {
+        "message": "Site"
+    },
+    "options_saved": {
+        "message": "Options saved"
+    }
+}
