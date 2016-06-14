@@ -34,19 +34,22 @@
     width: 15%;
     height: 100%;
     display: inline-block;
+    float: left;
 }
 
 .barrier_mid_column {
-    width: 69%;
+    width: 70%;
     height: 100%;
     display: inline-block;
     vertical-align: top;
+    float: left;
 }
 
 .barrier_right_column {
     width: 15%;
     height: 100%;
     display: inline-block;
+    float: left;
 }
 
 .barrier_message_container {
