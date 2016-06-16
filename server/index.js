@@ -25,9 +25,27 @@ var getQuotes = function(db, callback) {
     });
 };
 
+var getTypes = function(db, callback) {
+    var cursor = db.collection('types').find();
+    var res = [];
+    cursor.each(function(err, type) {
+        if(type != null) {
+            res.push(type);
+        } else {
+            callback(res);
+        }
+    });
+}
+
 app.get('/quotes', function(req, res) {
     getQuotes(db_con, function(quotes) {
         res.json(quotes);
+    });
+});
+
+app.get('/types', function(req, res) {
+    getTypes(db_con, function(types) {
+        res.json(types);
     });
 });
 
