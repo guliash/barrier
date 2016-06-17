@@ -1,4 +1,5 @@
-var currentQuote = 0;
+var _currentQuote = 0;
+var _quotes, _urls;
 
 var left_image_white_url = chrome.extension.getURL('images/ic_keyboard_arrow_left_white_48dp_2x.png');
 var right_image_white_url = chrome.extension.getURL('images/ic_keyboard_arrow_right_white_48dp_2x.png');
@@ -45,16 +46,16 @@ var main_container = _createElement('div', 'barrier_main_container');
 main_container.innerHTML = body;
 
 function showQuote() {
-    document.getElementById('barrier_message').innerHTML = quotes[currentQuote];
+    document.getElementById('barrier_message').innerHTML = _quotes[_currentQuote].quote;
 }
 
 function changeQuote(dir) {
-    currentQuote = (currentQuote + dir + quotes.length) % quotes.length;
+    _currentQuote = (_currentQuote + dir + _quotes.length) % _quotes.length;
     showQuote();
 }
 
-function main() {
-    shuffle(quotes);
+function showWarning() {
+    shuffle(_quotes);
 
     document.body.appendChild(main_container);
 
@@ -115,17 +116,29 @@ function main() {
 
 }
 
-function start(items) {
-    items.urls.some(function(url, i, urls) {
+function main() {
+        _urls.some(function(url, i, urls) {
         if(url.domain && window.location.href.indexOf(url.domain) > -1) {
-            main();
+            showWarning();
             return true;
         }
         return false;
     });
 }
 
-chrome.storage.sync.get({
-    time: 5,
-    urls: []
-}, start);
+function start() {
+    chrome.storage.sync.get({
+        time: 5,
+        urls: []
+    }, function(items) {
+        get(host + '/quotes', function(responseText) {
+            _urls = items.urls;
+            _quotes = JSON.parse(responseText);
+            main();
+        }, function(error) {
+            //nothing
+        });
+    });
+}
+
+start();

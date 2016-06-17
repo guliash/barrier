@@ -21,3 +21,19 @@ function swap(array, i, j) {
     array[i] = array[j];
     array[j] = b;
 }
+
+function get(url, success, error) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', url, true);
+    xhr.send();
+    xhr.onreadystatechange = function() {
+        if(xhr.readyState != 4) {
+            return;
+        }
+        if(xhr.status != 200) {
+            error({status: xhr.status, statusText: xhr.statusText});
+        } else {
+            success(xhr.responseText);
+        }
+    }
+}

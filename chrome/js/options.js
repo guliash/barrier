@@ -1,6 +1,12 @@
+var _types;
 function main() {
     localize();
-    restore_options();
+    get(host + '/types', function(responseText) {
+        _types = JSON.parse(responseText);
+        restore_options();
+    }, function(error) {
+
+    });
 }
 
 function restore_options() {
@@ -64,12 +70,12 @@ function add_url(item) {
     var remove_btn = _createElement('button');
     remove_btn.innerHTML = chrome.i18n.getMessage("options_delete_site_button");
     var selectedIndex = 0;
-    for(var i = 0; i < types.length; i++) {
+    for(var i = 0; i < _types.length; i++) {
         var option = _createElement('option');
-        option.value = types[i];
-        option.text = types[i];
+        option.value = _types[i].type;
+        option.text = _types[i].type;
         type_select.appendChild(option);
-        if(item.type == types[i]) {
+        if(item.type.type == _types[i].type) {
             selectedIndex = i;
         }
     }
@@ -88,5 +94,5 @@ document.addEventListener('DOMContentLoaded', main);
 
 document.getElementById('barrier_save').addEventListener('click', save_options);
 document.getElementById('barrier_add').addEventListener('click', function() {
-    add_url({type: types[0], domain: ''});
+    add_url({type: _types[0], domain: ''});
 });
