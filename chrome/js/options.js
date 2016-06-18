@@ -3,13 +3,13 @@ function main() {
     localize();
     get(host + '/types', function(responseText) {
         _types = JSON.parse(responseText);
-        restore_options();
+        restoreOptions();
     }, function(error) {
 
     });
 }
 
-function restore_options() {
+function restoreOptions() {
     chrome.storage.sync.get({
         time: 5,
         blockedSites: []
@@ -25,11 +25,11 @@ function localize() {
 function render(items) {
     document.getElementById('barrier_time').value = items.time;
     for(var i = 0; i < items.blockedSites.length; i++) {
-        add_url(items.blockedSites[i]);
+        addBlockedSite(items.blockedSites[i]);
     }
 }
 
-function save_options() {
+function saveOptions() {
     chrome.storage.sync.set({
         time: getTime(),
         blockedSites: getBlockedSites()
@@ -43,15 +43,15 @@ function save_options() {
 }
 
 function getTime() {
-    var time_input = document.getElementById('barrier_time');
-    return time_input.value;
+    var timeInput = document.getElementById('barrier_time');
+    return timeInput.value;
 }
 
 function getBlockedSites() {
     var blockedSites = [];
-    var urls_div = document.getElementById('barrier_urls');
-    for(var i = 0; i < urls_div.childNodes.length; i++) {
-        var child = urls_div.childNodes[i];
+    var urlsDiv = document.getElementById('barrier_urls');
+    for(var i = 0; i < urlsDiv.childNodes.length; i++) {
+        var child = urlsDiv.childNodes[i];
         var input = child.children[0];
         var select = child.children[1];
         blockedSites.push({domain: input.value, type: select.value});
@@ -59,30 +59,30 @@ function getBlockedSites() {
     return blockedSites;
 }
 
-function add_url(item) {
+function addBlockedSite(item) {
     var div = _createElement('div');
-    var domain_input = _createElement('input');
-    domain_input.type = 'text';
-    domain_input.placeholder = chrome.i18n.getMessage("options_site_placeholder");
-    var type_select = _createElement('select');
-    var remove_btn = _createElement('button');
-    remove_btn.innerHTML = chrome.i18n.getMessage("options_delete_site_button");
+    var domainInput = _createElement('input');
+    domainInput.type = 'text';
+    domainInput.placeholder = chrome.i18n.getMessage("options_site_placeholder");
+    var typeSelect = _createElement('select');
+    var removeBtn = _createElement('button');
+    removeBtn.innerHTML = chrome.i18n.getMessage("options_delete_site_button");
     var selectedIndex = 0;
     for(var i = 0; i < _types.length; i++) {
         var option = _createElement('option');
         option.value = _types[i].type;
         option.text = _types[i].type;
-        type_select.appendChild(option);
-        if(item.type.type == _types[i].type) {
+        typeSelect.appendChild(option);
+        if(item.type == _types[i].type) {
             selectedIndex = i;
         }
     }
-    domain_input.value = item.domain;
-    type_select.selectedIndex = selectedIndex;
-    div.appendChild(domain_input);
-    div.appendChild(type_select);
-    div.appendChild(remove_btn);
-    remove_btn.addEventListener('click', function() {
+    domainInput.value = item.domain;
+    typeSelect.selectedIndex = selectedIndex;
+    div.appendChild(domainInput);
+    div.appendChild(typeSelect);
+    div.appendChild(removeBtn);
+    removeBtn.addEventListener('click', function() {
         document.getElementById('barrier_urls').removeChild(div);
     });
     document.getElementById('barrier_urls').appendChild(div);
@@ -90,7 +90,7 @@ function add_url(item) {
 
 document.addEventListener('DOMContentLoaded', main);
 
-document.getElementById('barrier_save').addEventListener('click', save_options);
+document.getElementById('barrier_save').addEventListener('click', saveOptions);
 document.getElementById('barrier_add').addEventListener('click', function() {
-    add_url({type: _types[0], domain: ''});
+    addBlockedSite({type: _types[0], domain: ''});
 });
