@@ -1,5 +1,5 @@
 var _currentQuote = 0;
-var _quotes, _urls;
+var _quotes, _blockedSites;
 
 var left_image_white_url = chrome.extension.getURL('images/ic_keyboard_arrow_left_white_48dp_2x.png');
 var right_image_white_url = chrome.extension.getURL('images/ic_keyboard_arrow_right_white_48dp_2x.png');
@@ -116,9 +116,18 @@ function showWarning() {
 
 }
 
+function filterQuotesByType(type) {
+    return _quotes.filter(function(el) {
+        if(el.type == type) {
+            return true;
+        }
+    });
+}
+
 function main() {
-        _urls.some(function(url, i, urls) {
-        if(url.domain && window.location.href.indexOf(url.domain) > -1) {
+    _blockedSites.some(function(site, i, sites) {
+        if(site.domain && window.location.href.indexOf(site.domain) > -1) {
+            _quotes = filterQuotesByType(site.type);
             showWarning();
             return true;
         }
@@ -129,10 +138,10 @@ function main() {
 function start() {
     chrome.storage.sync.get({
         time: 5,
-        urls: []
+        blockedSites: []
     }, function(items) {
         get(host + '/quotes', function(responseText) {
-            _urls = items.urls;
+            _blockedSites = items.blockedSites;
             _quotes = JSON.parse(responseText);
             main();
         }, function(error) {

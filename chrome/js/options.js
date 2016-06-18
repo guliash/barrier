@@ -12,7 +12,7 @@ function main() {
 function restore_options() {
     chrome.storage.sync.get({
         time: 5,
-        urls: []
+        blockedSites: []
     }, render);
 }
 
@@ -24,17 +24,15 @@ function localize() {
 
 function render(items) {
     document.getElementById('barrier_time').value = items.time;
-    for(var i = 0; i < items.urls.length; i++) {
-        add_url(items.urls[i]);
+    for(var i = 0; i < items.blockedSites.length; i++) {
+        add_url(items.blockedSites[i]);
     }
 }
 
 function save_options() {
-    var time = getTime();
-    var urls = getUrls();
     chrome.storage.sync.set({
-        time: time,
-        urls: urls
+        time: getTime(),
+        blockedSites: getBlockedSites()
     }, function() {
         var status = document.getElementById('barrier_status');
         status.textContent = chrome.i18n.getMessage("options_saved");
@@ -49,16 +47,16 @@ function getTime() {
     return time_input.value;
 }
 
-function getUrls() {
-    var urls = [];
+function getBlockedSites() {
+    var blockedSites = [];
     var urls_div = document.getElementById('barrier_urls');
     for(var i = 0; i < urls_div.childNodes.length; i++) {
         var child = urls_div.childNodes[i];
         var input = child.children[0];
         var select = child.children[1];
-        urls.push({domain: input.value, type: select.value});
+        blockedSites.push({domain: input.value, type: select.value});
     }
-    return urls;
+    return blockedSites;
 }
 
 function add_url(item) {
