@@ -1,4 +1,4 @@
-.barrier_main_container {
+.barrier-main-container {
     width: 100%;
     height: 100%;
     background: black;
@@ -9,7 +9,7 @@
     z-index: 1000;
 }
 
-.barrier_sub_container {
+.barrier-sub-container {
     position: absolute;
     top: 15%;
     width: 100%;
@@ -18,26 +18,26 @@
     min-width: 600px;
 }
 
-.barrier_mid_top_panel {
+.barrier-mid-top-panel {
     width: 100%;
     height: 80%;
     display: block;
 }
 
-.barrier_mid_bottom_panel {
+.barrier-mid-bottom-panel {
     width: 100%;
     height: 20%;
     display: block;
 }
 
-.barrier_left_column {
+.barrier-left-column {
     width: 15%;
     height: 100%;
     display: inline-block;
     float: left;
 }
 
-.barrier_mid_column {
+.barrier-mid-column {
     width: 70%;
     height: 100%;
     display: inline-block;
@@ -45,14 +45,14 @@
     float: left;
 }
 
-.barrier_right_column {
+.barrier-right-column {
     width: 15%;
     height: 100%;
     display: inline-block;
     float: left;
 }
 
-.barrier_message_container {
+.barrier-message-container {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -62,13 +62,13 @@
     overflow: hidden;
 }
 
-.barrier_message {
+.barrier-message {
     font-family: "Times New Roman", Times, serif;
     font-size: 25pt;
     color: rgba(255,255,255,.9);
 }
 
-.barrier_img_container {
+.barrier-img-container {
     width: 100%;
     height: 100%;
     display: flex;
@@ -76,10 +76,10 @@
     justify-content: center;
 }
 
-.barrier_check {
+.barrier-check {
     float: left;
 }
 
-.barrier_cancel {
+.barrier-cancel {
     float: right;
 }

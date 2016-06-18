@@ -12,42 +12,42 @@ var cancelCircleLightRedUrl = chrome.extension.getURL('images/ic_cancel_light_re
 var cancelCircleDarkRedUrl = chrome.extension.getURL('images/ic_cancel_dark_red_48dp_2x.png');
 
 var body =
-'<div class="barrier_sub_container"> \
-    <div class="barrier_mid_top_panel"> \
-        <div class="barrier_left_column"> \
-            <div class="barrier_img_container"> \
-                <img id="barrier_left_arrow" src="' + leftImageWhiteUrl + '"> \
+'<div class="barrier-sub-container"> \
+    <div class="barrier-mid-top-panel"> \
+        <div class="barrier-left-column"> \
+            <div class="barrier-img-container"> \
+                <img id="barrier-left-arrow" src="' + leftImageWhiteUrl + '"> \
             </div> \
         </div> \
-        <div class="barrier_mid_column"> \
-            <div class="barrier_message_container"> \
-                <p id="barrier_message" class="barrier_message"> \
+        <div class="barrier-mid-column"> \
+            <div class="barrier-message-container"> \
+                <p id="barrier-message" class="barrier-message"> \
             </div> \
         </div> \
-        <div class="barrier_right_column"> \
-            <div class="barrier_img_container"> \
-                <img id="barrier_right_arrow" src="' + rightImageWhiteUrl + '"> \
+        <div class="barrier-right-column"> \
+            <div class="barrier-img-container"> \
+                <img id="barrier-right-arrow" src="' + rightImageWhiteUrl + '"> \
             </div> \
         </div> \
     </div> \
-    <div class="barrier_mid_bottom_panel"> \
-        <div class="barrier_left_column"> \
+    <div class="barrier-mid-bottom-panel"> \
+        <div class="barrier-left-column"> \
         </div> \
-        <div class="barrier_mid_column"> \
-            <img id="barrier_check" class="barrier_check" src="' + checkCircleDarkGreenUrl + '"> \
-            <img id="barrier_cancel" class="barrier_cancel" src="' + cancelCircleDarkRedUrl + '"> \
+        <div class="barrier-mid-column"> \
+            <img id="barrier-check" class="barrier-check" src="' + checkCircleDarkGreenUrl + '"> \
+            <img id="barrier-cancel" class="barrier-cancel" src="' + cancelCircleDarkRedUrl + '"> \
         </div> \
-        <div class="barrier_right_column"> \
+        <div class="barrier-right-column"> \
         </div> \
     </div> \
 </div>';
 
-var mainContainer = _createElement('div', 'barrier_main_container');
+var mainContainer = _createElement('div', 'barrier-main-container');
 
 mainContainer.innerHTML = body;
 
 function showQuote() {
-    document.getElementById('barrier_message').innerHTML = _quotes[_currentQuote].quote;
+    document.getElementById('barrier-message').innerHTML = _quotes[_currentQuote].quote;
 }
 
 function changeQuote(dir) {
@@ -69,10 +69,10 @@ function showWarning(site) {
 
     showQuote();
 
-    var leftBtn = document.getElementById('barrier_left_arrow');
-    var rightBtn = document.getElementById('barrier_right_arrow');
-    var checkBtn = document.getElementById('barrier_check');
-    var cancelBtn = document.getElementById('barrier_cancel');
+    var leftBtn = document.getElementById('barrier-left-arrow');
+    var rightBtn = document.getElementById('barrier-right-arrow');
+    var checkBtn = document.getElementById('barrier-check');
+    var cancelBtn = document.getElementById('barrier-cancel');
 
     leftBtn.addEventListener("click", function() {
         changeQuote(-1);

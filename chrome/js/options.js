@@ -20,13 +20,13 @@ function restoreOptions() {
 }
 
 function localize() {
-    document.getElementById('barrier_time_label').textContent = chrome.i18n.getMessage("options_time_label");
-    document.getElementById('barrier_add').textContent = chrome.i18n.getMessage("options_add_button");
-    document.getElementById('barrier_save').textContent = chrome.i18n.getMessage("options_save_button");
+    document.getElementById('barrier-time-label').textContent = chrome.i18n.getMessage("options_time_label");
+    document.getElementById('barrier-add').textContent = chrome.i18n.getMessage("options_add_button");
+    document.getElementById('barrier-save').textContent = chrome.i18n.getMessage("options_save_button");
 }
 
 function render(items) {
-    document.getElementById('barrier_time').value = items.time;
+    document.getElementById('barrier-time').value = items.time;
     for(var i = 0; i < items.blockedSites.length; i++) {
         addBlockedSite(items.blockedSites[i]);
     }
@@ -37,7 +37,7 @@ function saveOptions() {
         time: getTime(),
         blockedSites: getBlockedSites()
     }, function() {
-        var status = document.getElementById('barrier_status');
+        var status = document.getElementById('barrier-status');
         status.textContent = chrome.i18n.getMessage("options_saved");
         setTimeout(function() {
             status.textContent = '';
@@ -46,13 +46,13 @@ function saveOptions() {
 }
 
 function getTime() {
-    var timeInput = document.getElementById('barrier_time');
+    var timeInput = document.getElementById('barrier-time');
     return timeInput.value;
 }
 
 function getBlockedSites() {
     var blockedSites = [];
-    var sitesDiv = document.getElementById('barrier_urls');
+    var sitesDiv = document.getElementById('barrier-sites');
     for(var i = 0; i < sitesDiv.childNodes.length; i++) {
         var child = sitesDiv.childNodes[i];
         var input = child.children[0];
@@ -89,14 +89,14 @@ function addBlockedSite(item) {
     div.barrier = {};
     div.barrier.data = {lastClosed: item.lastClosed};
     removeBtn.addEventListener('click', function() {
-        document.getElementById('barrier_urls').removeChild(div);
+        document.getElementById('barrier-sites').removeChild(div);
     });
-    document.getElementById('barrier_urls').appendChild(div);
+    document.getElementById('barrier-sites').appendChild(div);
 }
 
 document.addEventListener('DOMContentLoaded', main);
 
-document.getElementById('barrier_save').addEventListener('click', saveOptions);
-document.getElementById('barrier_add').addEventListener('click', function() {
+document.getElementById('barrier-save').addEventListener('click', saveOptions);
+document.getElementById('barrier-add').addEventListener('click', function() {
     addBlockedSite({type: _types[0], domain: ''});
 });
