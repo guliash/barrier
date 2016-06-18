@@ -1,4 +1,5 @@
 var _types;
+
 function main() {
     localize();
     get(host + '/types', function(responseText) {
@@ -13,7 +14,9 @@ function restoreOptions() {
     chrome.storage.sync.get({
         time: 5,
         blockedSites: []
-    }, render);
+    }, function(items) {
+        render(items);
+    });
 }
 
 function localize() {
@@ -49,12 +52,13 @@ function getTime() {
 
 function getBlockedSites() {
     var blockedSites = [];
-    var urlsDiv = document.getElementById('barrier_urls');
-    for(var i = 0; i < urlsDiv.childNodes.length; i++) {
-        var child = urlsDiv.childNodes[i];
+    var sitesDiv = document.getElementById('barrier_urls');
+    for(var i = 0; i < sitesDiv.childNodes.length; i++) {
+        var child = sitesDiv.childNodes[i];
         var input = child.children[0];
         var select = child.children[1];
-        blockedSites.push({domain: input.value, type: select.value});
+        blockedSites.push({domain: input.value, type: select.value,
+            lastClosed: child.barrier.data.lastClosed});
     }
     return blockedSites;
 }
@@ -82,6 +86,8 @@ function addBlockedSite(item) {
     div.appendChild(domainInput);
     div.appendChild(typeSelect);
     div.appendChild(removeBtn);
+    div.barrier = {};
+    div.barrier.data = {lastClosed: item.lastClosed};
     removeBtn.addEventListener('click', function() {
         document.getElementById('barrier_urls').removeChild(div);
     });

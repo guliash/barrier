@@ -1,5 +1,6 @@
 var _currentQuote = 0;
 var _quotes, _blockedSites;
+var _time;
 
 var leftImageWhiteUrl = chrome.extension.getURL('images/ic_keyboard_arrow_left_white_48dp_2x.png');
 var rightImageWhiteUrl = chrome.extension.getURL('images/ic_keyboard_arrow_right_white_48dp_2x.png');
@@ -54,7 +55,14 @@ function changeQuote(dir) {
     showQuote();
 }
 
-function showWarning() {
+function showWarning(site) {
+
+    if(!isIntervalExpired(site)) {
+        return;
+    }
+
+    _quotes = filterQuotesByType(site.type);
+
     shuffle(_quotes);
 
     document.body.appendChild(mainContainer);
@@ -76,6 +84,14 @@ function showWarning() {
 
     cancelBtn.addEventListener("click", function() {
         document.body.removeChild(mainContainer);
+        for(var i = 0; i < _blockedSites.length; i++) {
+            if(_blockedSites[i].domain == site.domain) {
+                _blockedSites[i].lastClosed = getTimestamp(TimeEnum.MILLIS);
+            }
+        }
+        chrome.storage.sync.set({
+            blockedSites: _blockedSites,
+        });
     });
 
     checkBtn.addEventListener("click", function() {
@@ -107,7 +123,7 @@ function showWarning() {
     });
 
     cancelBtn.addEventListener('mouseover', function() {
-        cancelBtn.src = cancelCircleLightRed_url;
+        cancelBtn.src = cancelCircleLightRedUrl;
     });
 
     cancelBtn.addEventListener('mouseout', function() {
@@ -124,11 +140,18 @@ function filterQuotesByType(type) {
     });
 }
 
+function isIntervalExpired(site) {
+    if(!site.lastClosed) {
+        return true;
+    }
+    var timestampMillis = getTimestamp(TimeEnum.MILLIS);
+    return millisToUnit(timestampMillis - site.lastClosed, TimeEnum.MINUTES) >= _time;
+}
+
 function main() {
     _blockedSites.some(function(site, i, sites) {
         if(site.domain && window.location.href.indexOf(site.domain) > -1) {
-            _quotes = filterQuotesByType(site.type);
-            showWarning();
+            showWarning(site);
             return true;
         }
         return false;
@@ -141,6 +164,7 @@ function start() {
         blockedSites: []
     }, function(items) {
         get(host + '/quotes', function(responseText) {
+            _time = items.time;
             _blockedSites = items.blockedSites;
             _quotes = JSON.parse(responseText);
             main();
