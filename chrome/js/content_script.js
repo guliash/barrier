@@ -57,12 +57,6 @@ function changeQuote(dir) {
 
 function showWarning(site) {
 
-    if(!isIntervalExpired(site)) {
-        return;
-    }
-
-    _quotes = filterQuotesByType(site.type);
-
     shuffle(_quotes);
 
     document.body.appendChild(mainContainer);
@@ -132,14 +126,6 @@ function showWarning(site) {
 
 }
 
-function filterQuotesByType(type) {
-    return _quotes.filter(function(el) {
-        if(el.type == type) {
-            return true;
-        }
-    });
-}
-
 function isIntervalExpired(site) {
     if(!site.lastClosed) {
         return true;
@@ -148,14 +134,17 @@ function isIntervalExpired(site) {
     return millisToUnit(timestampMillis - site.lastClosed, TimeEnum.MINUTES) >= _time;
 }
 
-function main() {
-    _blockedSites.some(function(site, i, sites) {
-        if(site.domain && window.location.href.indexOf(site.domain) > -1) {
-            showWarning(site);
-            return true;
+function isSiteBlocked(site) {
+    return site.domain && window.location.href.indexOf(site.domain) > -1 && isIntervalExpired(site);
+}
+
+function getBlockedSite() {
+    for(var i = 0; i < _blockedSites.length; i++) {
+        if(isSiteBlocked(_blockedSites[i])) {
+            return _blockedSites[i];
         }
-        return false;
-    });
+    }
+    return null;
 }
 
 function start() {
@@ -163,11 +152,19 @@ function start() {
         time: 5,
         blockedSites: []
     }, function(items) {
-        get(host + '/quotes', function(responseText) {
-            _time = items.time;
-            _blockedSites = items.blockedSites;
+
+        _time = items.time;
+        _blockedSites = items.blockedSites;
+
+        var blockedSite = getBlockedSite();
+        if(!blockedSite) {
+            return;
+        }
+
+        var url = host + '/quotes?type=' + blockedSite.type;
+        get(url, function(responseText) {
             _quotes = JSON.parse(responseText);
-            main();
+            showWarning(blockedSite);
         }, function(error) {
             //nothing
         });
