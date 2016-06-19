@@ -64,7 +64,7 @@ function getBlockedSites() {
 }
 
 function addBlockedSite(item) {
-    var div = _createElement('div');
+    var div = _createElement('div', 'barrier-blocked-site');
     var domainInput = _createElement('input');
     domainInput.type = 'text';
     domainInput.placeholder = chrome.i18n.getMessage("options_site_placeholder");

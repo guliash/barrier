@@ -1,0 +1,35 @@
+.barrier-blocked-site {
+    padding: 10px;
+}
+
+.barrier-blocked-site > select {
+    margin-left: 10px;
+}
+
+.barrier-blocked-site > button {
+    margin-left: 10px;
+}
+
+.barrier-time-block {
+    padding: 10px;
+}
+
+.barrier-time-block > input {
+    margin-left: 10px;
+}
+
+.barrier-buttons-block {
+    padding: 10px;
+}
+
+.barrier-buttons-block > #barrier-save {
+    margin-left: 10px;
+}
+
+body {
+    font-size: 12pt;
+}
+
+#barrier-status {
+    padding: 10px;
+}

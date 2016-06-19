@@ -2,13 +2,18 @@
     <head>
         <title>Barrier settings</title>
         <meta charset="utf-8">
+        <link rel="stylesheet" type="text/css" href="../css/options.css">
     </head>
     <body>
-        <label for"barrier-time" id="barrier-time-label"></label>
-        <input type="number" id="barrier-time" min="0">
+        <div class="barrier-time-block">
+            <label for"barrier-time" id="barrier-time-label"></label>
+            <input type="number" id="barrier-time" min="0">
+        </div>
         <div id="barrier-sites"></div>
-        <button id="barrier-add"></button>
-        <button id="barrier-save"></button>
+        <div class="barrier-buttons-block">
+            <button id="barrier-add"></button>
+            <button id="barrier-save"></button>
+        </div>
         <div id="barrier-status"></div>
         <script src="../js/host.js"></script>
         <script src="../js/helper.js"></script>
