@@ -2,6 +2,18 @@ var _currentQuote = 0;
 var _quotes, _blockedSites;
 var _time;
 
+var port = chrome.runtime.connect({ name: 'storage' });
+
+port.onMessage.addListener(function(msg) {
+    if(msg.type == 'save') {
+        //nothing
+    } else if(msg.type == 'get') {
+        start(msg.data);
+    } else {
+        //nothing
+    }
+});
+
 var leftImageWhiteUrl = chrome.extension.getURL('images/ic_keyboard_arrow_left_white_48dp_2x.png');
 var rightImageWhiteUrl = chrome.extension.getURL('images/ic_keyboard_arrow_right_white_48dp_2x.png');
 var leftImageGreyUrl = chrome.extension.getURL('images/ic_keyboard_arrow_left_grey_48dp_2x.png');
@@ -83,9 +95,7 @@ function showWarning(site) {
                 _blockedSites[i].lastClosed = getTimestamp(TimeEnum.MILLIS);
             }
         }
-        chrome.storage.sync.set({
-            blockedSites: _blockedSites,
-        });
+        port.postMessage({ type: 'save', data: { blockedSites: _blockedSites } });
     });
 
     checkBtn.addEventListener("click", function() {
@@ -147,28 +157,22 @@ function getBlockedSite() {
     return null;
 }
 
-function start() {
-    chrome.storage.sync.get({
-        time: 5,
-        blockedSites: []
-    }, function(items) {
+function start(data) {
+    _time = data.time;
+    _blockedSites = data.blockedSites;
 
-        _time = items.time;
-        _blockedSites = items.blockedSites;
+    var blockedSite = getBlockedSite();
+    if(!blockedSite) {
+        return;
+    }
 
-        var blockedSite = getBlockedSite();
-        if(!blockedSite) {
-            return;
-        }
-
-        var url = host + '/quotes?type=' + blockedSite.type;
-        get(url, function(responseText) {
-            _quotes = JSON.parse(responseText);
-            showWarning(blockedSite);
-        }, function(error) {
-            //nothing
-        });
+    var url = host + '/quotes?type=' + blockedSite.type;
+    get(url, function(responseText) {
+        _quotes = JSON.parse(responseText);
+        showWarning(blockedSite);
+    }, function(error) {
+        //nothing
     });
 }
 
-start();
+port.postMessage({ type: 'get' });
