@@ -1,16 +1,25 @@
 var _currentQuote = 0;
-var _quotes, _blockedSites;
+var _quotes, _blockedSites, _blockedSite;
 var _time;
 
-var port = chrome.runtime.connect({ name: 'storage' });
+var portStorage = chrome.runtime.connect({ name: 'storage' });
+var portApi = chrome.runtime.connect({ name: 'api' });
 
-port.onMessage.addListener(function(msg) {
-    if(msg.type == 'save') {
-        //nothing
-    } else if(msg.type == 'get') {
-        start(msg.data);
-    } else {
-        //nothing
+portStorage.onMessage.addListener(function(msg) {
+    switch(msg.type) {
+        case 'save':
+            break;
+        case 'get':
+            onGetOptions(msg.data);
+            break;
+    }
+});
+
+portApi.onMessage.addListener(function(msg) {
+    switch(msg.method) {
+        case 'quotes':
+            onGetQuotes(msg);
+            break;
     }
 });
 
@@ -95,7 +104,7 @@ function showWarning(site) {
                 _blockedSites[i].lastClosed = getTimestamp(TimeEnum.MILLIS);
             }
         }
-        port.postMessage({ type: 'save', data: { blockedSites: _blockedSites } });
+        portStorage.postMessage({ type: 'save', data: { blockedSites: _blockedSites } });
     });
 
     checkBtn.addEventListener("click", function() {
@@ -157,22 +166,23 @@ function getBlockedSite() {
     return null;
 }
 
-function start(data) {
+function onGetOptions(data) {
     _time = data.time;
     _blockedSites = data.blockedSites;
 
-    var blockedSite = getBlockedSite();
-    if(!blockedSite) {
+    _blockedSite = getBlockedSite();
+    if(!_blockedSite) {
         return;
     }
 
-    var url = host + '/quotes?type=' + blockedSite.type;
-    get(url, function(responseText) {
-        _quotes = JSON.parse(responseText);
-        showWarning(blockedSite);
-    }, function(error) {
-        //nothing
-    });
+    portApi.postMessage({ method: 'quotes', params: [['type', _blockedSite.type]] });
 }
 
-port.postMessage({ type: 'get' });
+function onGetQuotes(result) {
+    if(result.success) {
+        _quotes = result.data;
+        showWarning(_blockedSite);
+    }
+}
+
+portStorage.postMessage({ type: 'get' });

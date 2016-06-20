@@ -8,7 +8,7 @@
         {
             "matches": ["http://*/*", "https://*/*"],
             "css": ["css/content_script.css"],
-            "js": ["js/helper.js", "js/host.js", "js/content_script.js"]
+            "js": ["js/helper.js", "js/content_script.js"]
         }
     ],
     "background": {

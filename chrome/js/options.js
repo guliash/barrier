@@ -1,29 +1,43 @@
 var _types;
 
-var port = chrome.runtime.connect({ name: 'storage' });
+var portStorage = chrome.runtime.connect({ name: 'storage' });
+var portApi = chrome.runtime.connect({ name: 'api' });
 
-port.onMessage.addListener(function(msg) {
-    if(msg.type == 'save') {
-        onDataSaved();
-    } else if(msg.type == 'get') {
-        render(msg.data);
-    } else {
-        //nothing
+portStorage.onMessage.addListener(function(msg) {
+    switch(msg.type) {
+        case 'save':
+            onDataSaved();
+            break;
+        case 'get':
+            render(msg.data);
+            break;
+    }
+});
+
+portApi.onMessage.addListener(function(msg) {
+    console.log('api');
+    console.log(msg);
+    switch(msg.method) {
+        case 'types':
+            onGetTypes(msg);
+            break;
     }
 });
 
 function main() {
     localize();
-    get(host + '/types', function(responseText) {
-        _types = JSON.parse(responseText);
+    portApi.postMessage({ method: 'types' });
+}
+
+function onGetTypes(result) {
+    if(result.success) {
+        _types = result.data;
         restoreOptions();
-    }, function(error) {
-        //nothing
-    });
+    }
 }
 
 function restoreOptions() {
-    port.postMessage({ type: 'get' });
+    portStorage.postMessage({ type: 'get' });
 }
 
 function localize() {
@@ -48,7 +62,7 @@ function onDataSaved() {
 }
 
 function saveOptions() {
-    port.postMessage({ type: 'save', data: { time: getTime(), blockedSites: getBlockedSites() } });
+    portStorage.postMessage({ type: 'save', data: { time: getTime(), blockedSites: getBlockedSites() } });
 }
 
 function getTime() {
