@@ -1,6 +1,27 @@
 var _currentQuote = 0;
-var _quotes, _blockedSites;
+var _quotes, _blockedSites, _blockedSite;
 var _time;
+
+var portStorage = chrome.runtime.connect({ name: 'storage' });
+var portApi = chrome.runtime.connect({ name: 'api' });
+
+portStorage.onMessage.addListener(function(msg) {
+    switch(msg.type) {
+        case 'save':
+            break;
+        case 'get':
+            onGetOptions(msg.data);
+            break;
+    }
+});
+
+portApi.onMessage.addListener(function(msg) {
+    switch(msg.method) {
+        case 'quotes':
+            onGetQuotes(msg);
+            break;
+    }
+});
 
 var leftImageWhiteUrl = chrome.extension.getURL('images/ic_keyboard_arrow_left_white_48dp_2x.png');
 var rightImageWhiteUrl = chrome.extension.getURL('images/ic_keyboard_arrow_right_white_48dp_2x.png');
@@ -83,9 +104,7 @@ function showWarning(site) {
                 _blockedSites[i].lastClosed = getTimestamp(TimeEnum.MILLIS);
             }
         }
-        chrome.storage.sync.set({
-            blockedSites: _blockedSites,
-        });
+        portStorage.postMessage({ type: 'save', data: { blockedSites: _blockedSites } });
     });
 
     checkBtn.addEventListener("click", function() {
@@ -147,28 +166,23 @@ function getBlockedSite() {
     return null;
 }
 
-function start() {
-    chrome.storage.sync.get({
-        time: 5,
-        blockedSites: []
-    }, function(items) {
+function onGetOptions(data) {
+    _time = data.time;
+    _blockedSites = data.blockedSites;
 
-        _time = items.time;
-        _blockedSites = items.blockedSites;
+    _blockedSite = getBlockedSite();
+    if(!_blockedSite) {
+        return;
+    }
 
-        var blockedSite = getBlockedSite();
-        if(!blockedSite) {
-            return;
-        }
-
-        var url = host + '/quotes?type=' + blockedSite.type;
-        get(url, function(responseText) {
-            _quotes = JSON.parse(responseText);
-            showWarning(blockedSite);
-        }, function(error) {
-            //nothing
-        });
-    });
+    portApi.postMessage({ method: 'quotes', params: [['type', _blockedSite.type]] });
 }
 
-start();
+function onGetQuotes(result) {
+    if(result.success) {
+        _quotes = result.data;
+        showWarning(_blockedSite);
+    }
+}
+
+portStorage.postMessage({ type: 'get' });

@@ -1,22 +1,43 @@
 var _types;
 
+var portStorage = chrome.runtime.connect({ name: 'storage' });
+var portApi = chrome.runtime.connect({ name: 'api' });
+
+portStorage.onMessage.addListener(function(msg) {
+    switch(msg.type) {
+        case 'save':
+            onDataSaved();
+            break;
+        case 'get':
+            render(msg.data);
+            break;
+    }
+});
+
+portApi.onMessage.addListener(function(msg) {
+    console.log('api');
+    console.log(msg);
+    switch(msg.method) {
+        case 'types':
+            onGetTypes(msg);
+            break;
+    }
+});
+
 function main() {
     localize();
-    get(host + '/types', function(responseText) {
-        _types = JSON.parse(responseText);
-        restoreOptions();
-    }, function(error) {
+    portApi.postMessage({ method: 'types' });
+}
 
-    });
+function onGetTypes(result) {
+    if(result.success) {
+        _types = result.data;
+        restoreOptions();
+    }
 }
 
 function restoreOptions() {
-    chrome.storage.sync.get({
-        time: 5,
-        blockedSites: []
-    }, function(items) {
-        render(items);
-    });
+    portStorage.postMessage({ type: 'get' });
 }
 
 function localize() {
@@ -32,17 +53,16 @@ function render(items) {
     }
 }
 
+function onDataSaved() {
+    var status = document.getElementById('barrier-status');
+    status.textContent = chrome.i18n.getMessage("options_saved");
+    setTimeout(function() {
+        status.textContent = '';
+    }, 2000);
+}
+
 function saveOptions() {
-    chrome.storage.sync.set({
-        time: getTime(),
-        blockedSites: getBlockedSites()
-    }, function() {
-        var status = document.getElementById('barrier-status');
-        status.textContent = chrome.i18n.getMessage("options_saved");
-        setTimeout(function() {
-            status.textContent = '';
-        }, 2000);
-  });
+    portStorage.postMessage({ type: 'save', data: { time: getTime(), blockedSites: getBlockedSites() } });
 }
 
 function getTime() {
@@ -58,7 +78,7 @@ function getBlockedSites() {
         var input = child.children[0];
         var select = child.children[1];
         blockedSites.push({domain: input.value, type: select.value,
-            lastClosed: child.barrier.data.lastClosed});
+            lastClosed: undefined});
     }
     return blockedSites;
 }
@@ -86,8 +106,6 @@ function addBlockedSite(item) {
     div.appendChild(domainInput);
     div.appendChild(typeSelect);
     div.appendChild(removeBtn);
-    div.barrier = {};
-    div.barrier.data = {lastClosed: item.lastClosed};
     removeBtn.addEventListener('click', function() {
         document.getElementById('barrier-sites').removeChild(div);
     });
