@@ -1,4 +1,5 @@
 
+
 function getStoragePortListener(port) {
     return function(msg) {
         console.log('storage');
@@ -140,6 +141,8 @@ function getData(callback) {
 
 chrome.webNavigation.onHistoryStateUpdated.addListener(function(details) {
     console.log('on push');
+    chrome.tabs.executeScript(details.tabId, { file: "js/content_script.js" });
+
 });
 
 chrome.storage.onChanged.addListener(function(changes, namespace) {

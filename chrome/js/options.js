@@ -40,6 +40,16 @@ function restoreOptions() {
     portStorage.postMessage({ type: 'get' });
 }
 
+function _createElement() {
+    var el = document.createElement(arguments[0]);
+    if(arguments.length > 1) {
+        for(var i = 1; i < arguments.length; i++) {
+            el.className += ' ' + arguments[i];
+        }
+    }
+    return el;
+}
+
 function localize() {
     document.getElementById('barrier-time-label').textContent = chrome.i18n.getMessage("options_time_label");
     document.getElementById('barrier-add').textContent = chrome.i18n.getMessage("options_add_button");
