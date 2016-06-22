@@ -33,7 +33,7 @@ mongo_client.connect(db_url, function(err, db) {
     console.log('connected');
 });
 
-app.get('/quotes', function(req, res) {
+app.get('/barrier/api/quotes', function(req, res) {
 
     var type = req.query.type;
     var criteria = {};
@@ -49,7 +49,7 @@ app.get('/quotes', function(req, res) {
     }, criteria, proj);
 });
 
-app.get('/types', function(req, res) {
+app.get('/barrier/api/types', function(req, res) {
 
     var criteria = {};
     var proj = { _id: 0 };
@@ -59,7 +59,7 @@ app.get('/types', function(req, res) {
     }, criteria, proj);
 });
 
-app.get('/', function(req, res) {
+app.get('/barrier', function(req, res) {
     res.send('Hello world');
 });
 
