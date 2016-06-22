@@ -1,5 +1,4 @@
 
-
 function getStoragePortListener(port) {
     return function(msg) {
         console.log('storage');
@@ -26,10 +25,10 @@ function getApiPortListener(port) {
         var params = [];
         switch(msg.method) {
             case 'quotes':
-                url = host + '/quotes';
+                url = host + '/api/quotes';
                 break;
             case 'types':
-                url = host + '/types';
+                url = host + '/api/types';
                 break;
         }
         if(url) {
