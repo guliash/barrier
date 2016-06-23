@@ -30,21 +30,22 @@ portApi.onMessage.addListener(function(msg) {
     }
 });
 
-var leftImageWhiteUrl = chrome.extension.getURL('images/ic_keyboard_arrow_left_white_48dp_2x.png');
-var rightImageWhiteUrl = chrome.extension.getURL('images/ic_keyboard_arrow_right_white_48dp_2x.png');
-var leftImageGreyUrl = chrome.extension.getURL('images/ic_keyboard_arrow_left_grey_48dp_2x.png');
-var rightImageGreyUrl = chrome.extension.getURL('images/ic_keyboard_arrow_right_grey_48dp_2x.png');
-var checkCircleLightGreenUrl = chrome.extension.getURL('images/ic_check_circle_light_green_48dp_2x.png');
-var checkCircleDarkGreenUrl = chrome.extension.getURL('images/ic_check_circle_dark_green_48dp_2x.png');
-var cancelCircleLightRedUrl = chrome.extension.getURL('images/ic_cancel_light_red_48dp_2x.png');
-var cancelCircleDarkRedUrl = chrome.extension.getURL('images/ic_cancel_dark_red_48dp_2x.png');
+var leftIconMouseOut = chrome.extension.getURL('images/ic_keyboard_arrow_left_white_48dp_2x.png');
+var rightIconMouseOut = chrome.extension.getURL('images/ic_keyboard_arrow_right_white_48dp_2x.png');
+var leftIconMouseOver = chrome.extension.getURL('images/ic_keyboard_arrow_left_grey_48dp_2x.png');
+var rightIconMouseOver = chrome.extension.getURL('images/ic_keyboard_arrow_right_grey_48dp_2x.png');
+
+var leaveIconMouseOut = chrome.extension.getURL('images/angel-light-96.png');
+var leaveIconMouseOver = chrome.extension.getURL('images/angel-96.png');
+var proceedIconMouseOut = chrome.extension.getURL('images/poison-less-96.png');
+var proceedIconMouseOver = chrome.extension.getURL('images/poison-96.png');
 
 var body =
 '<div class="barrier-sub-container"> \
     <div class="barrier-mid-top-panel"> \
         <div class="barrier-left-column"> \
             <div class="barrier-img-container"> \
-                <img id="barrier-left-arrow" src="' + leftImageWhiteUrl + '"> \
+                <img id="barrier-left-arrow" src="' + leftIconMouseOut + '"> \
             </div> \
         </div> \
         <div class="barrier-mid-column"> \
@@ -54,7 +55,7 @@ var body =
         </div> \
         <div class="barrier-right-column"> \
             <div class="barrier-img-container"> \
-                <img id="barrier-right-arrow" src="' + rightImageWhiteUrl + '"> \
+                <img id="barrier-right-arrow" src="' + rightIconMouseOut + '"> \
             </div> \
         </div> \
     </div> \
@@ -62,8 +63,8 @@ var body =
         <div class="barrier-left-column"> \
         </div> \
         <div class="barrier-mid-column"> \
-            <img id="barrier-check" class="barrier-check" src="' + checkCircleDarkGreenUrl + '"> \
-            <img id="barrier-cancel" class="barrier-cancel" src="' + cancelCircleDarkRedUrl + '"> \
+            <img id="barrier-check" class="barrier-check" src="' + leaveIconMouseOut + '"> \
+            <img id="barrier-cancel" class="barrier-cancel" src="' + proceedIconMouseOut + '"> \
         </div> \
         <div class="barrier-right-column"> \
         </div> \
@@ -119,35 +120,35 @@ function showWarning(site) {
     });
 
     leftBtn.addEventListener('mouseover', function() {
-        leftBtn.src = leftImageGreyUrl;
+        leftBtn.src = leftIconMouseOver;
     });
 
     rightBtn.addEventListener('mouseover', function() {
-        rightBtn.src = rightImageGreyUrl;
+        rightBtn.src = rightIconMouseOver;
     });
 
     leftBtn.addEventListener('mouseout', function() {
-        leftBtn.src = leftImageWhiteUrl;
+        leftBtn.src = leftIconMouseOut;
     });
 
     rightBtn.addEventListener('mouseout', function() {
-        rightBtn.src = rightImageWhiteUrl;
+        rightBtn.src = rightIconMouseOut;
     });
 
     checkBtn.addEventListener('mouseover', function() {
-        checkBtn.src = checkCircleLightGreenUrl;
+        checkBtn.src = leaveIconMouseOver;
     });
 
     checkBtn.addEventListener('mouseout', function() {
-        checkBtn.src = checkCircleDarkGreenUrl;
+        checkBtn.src = leaveIconMouseOut;
     });
 
     cancelBtn.addEventListener('mouseover', function() {
-        cancelBtn.src = cancelCircleLightRedUrl;
+        cancelBtn.src = proceedIconMouseOver;
     });
 
     cancelBtn.addEventListener('mouseout', function() {
-        cancelBtn.src = cancelCircleDarkRedUrl;
+        cancelBtn.src = proceedIconMouseOut;
     });
 
 }

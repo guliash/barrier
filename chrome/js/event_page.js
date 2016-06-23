@@ -1,3 +1,4 @@
+var host = 'https://guliash.com/barrier';
 
 function getStoragePortListener(port) {
     return function(msg) {
