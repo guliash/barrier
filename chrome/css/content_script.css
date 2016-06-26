@@ -54,16 +54,18 @@
 
 .barrier-quote-container {
     width: 100%;
-    height: 70%;
-    position: relative;
-    top: 30%;
-    left: 0%;
+    height: 100%;
     text-align: center;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .barrier-quote {
     margin: 0;
+    width: 100%;
 }
 
 .barrier-message {

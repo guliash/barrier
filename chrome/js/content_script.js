@@ -50,7 +50,7 @@ var body =
         </div> \
         <div class="barrier-mid-column"> \
             <div class="barrier-quote-container"> \
-                <p class="barrier-message"> \
+                <p class="barrier-quote"> \
                     <span class="barrier-message" id="barrier-message"></span> \
                     <span class="barrier-author" id="barrier-author"></span> \
                 </p> \
