@@ -1,16 +1,20 @@
 {
     "quote": "Text1",
-    "type": "adult"
+    "type": "adult",
+    "author": "author1"
 }
 {
     "quote": "Text2",
-    "type": "social"
+    "type": "social",
+    "author": "author2"
 }
 {
     "quote": "Text3",
-    "type": "adult"
+    "type": "adult",
+    "author": "author3"
 }
 {
     "quote": "Text4",
-    "type": "social"
+    "type": "social",
+    "author": "author4"
 }

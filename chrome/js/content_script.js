@@ -30,10 +30,10 @@ portApi.onMessage.addListener(function(msg) {
     }
 });
 
-var leftIconMouseOut = chrome.extension.getURL('images/ic_keyboard_arrow_left_white_48dp_2x.png');
-var rightIconMouseOut = chrome.extension.getURL('images/ic_keyboard_arrow_right_white_48dp_2x.png');
-var leftIconMouseOver = chrome.extension.getURL('images/ic_keyboard_arrow_left_grey_48dp_2x.png');
-var rightIconMouseOver = chrome.extension.getURL('images/ic_keyboard_arrow_right_grey_48dp_2x.png');
+var leftIconMouseOut = chrome.extension.getURL('images/ic_keyboard_arrow_left_white_56.png');
+var rightIconMouseOut = chrome.extension.getURL('images/ic_keyboard_arrow_right_white_56.png');
+var leftIconMouseOver = chrome.extension.getURL('images/ic_keyboard_arrow_left_grey_56.png');
+var rightIconMouseOver = chrome.extension.getURL('images/ic_keyboard_arrow_right_grey_56.png');
 
 var leaveIconMouseOut = chrome.extension.getURL('images/angel-light-96.png');
 var leaveIconMouseOver = chrome.extension.getURL('images/angel-96.png');
@@ -49,8 +49,11 @@ var body =
             </div> \
         </div> \
         <div class="barrier-mid-column"> \
-            <div class="barrier-message-container"> \
-                <p id="barrier-message" class="barrier-message"> \
+            <div class="barrier-quote-container"> \
+                <p class="barrier-message"> \
+                    <span class="barrier-message" id="barrier-message"></span> \
+                    <span class="barrier-author" id="barrier-author"></span> \
+                </p> \
             </div> \
         </div> \
         <div class="barrier-right-column"> \
@@ -63,8 +66,8 @@ var body =
         <div class="barrier-left-column"> \
         </div> \
         <div class="barrier-mid-column"> \
-            <img id="barrier-check" class="barrier-check" src="' + leaveIconMouseOut + '"> \
-            <img id="barrier-cancel" class="barrier-cancel" src="' + proceedIconMouseOut + '"> \
+            <img id="barrier-check" class="barrier-leave" src="' + leaveIconMouseOut + '"> \
+            <img id="barrier-cancel" class="barrier-proceed" src="' + proceedIconMouseOut + '"> \
         </div> \
         <div class="barrier-right-column"> \
         </div> \
@@ -76,7 +79,18 @@ var mainContainer = _createElement('div', 'barrier-main-container');
 mainContainer.innerHTML = body;
 
 function showQuote() {
-    document.getElementById('barrier-message').innerHTML = _quotes[_currentQuote].quote;
+    var quote = _quotes[_currentQuote];
+    showQuoteMessage(quote);
+    showQuoteAuthor(quote);
+}
+
+function showQuoteMessage(quote) {
+    document.getElementById('barrier-message').innerHTML = '«' + quote.quote + '»';
+}
+
+function showQuoteAuthor(quote) {
+    var str = (quote.author ? '(' + quote.author + ')' : '(' + 'ANONYMOUS' + ')');
+    document.getElementById('barrier-author').innerHTML = str;
 }
 
 function changeQuote(dir) {
