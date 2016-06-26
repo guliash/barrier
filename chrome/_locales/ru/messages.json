@@ -37,5 +37,11 @@
     },
     "unknown_author": {
         "message": "Автор неизвестен"
+    },
+    "icons8": {
+        "message": "icons8.com"
+    },
+    "homepage": {
+        "message": "Домашная страница"
     }
 }

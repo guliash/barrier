@@ -72,6 +72,12 @@ var body =
         <div class="barrier-right-column"> \
         </div> \
     </div> \
+    <div class="barrier-footer"> \
+        <p>\
+            <a href="https://guliash.com/barrier" id="barrier-homepage-link"></a>\
+            <a href="https://icons8.com" id="barrier-icons8-link"></a>\
+        </p> \
+    </div> \
 </div>';
 
 var mainContainer = _createElement('div', 'barrier-main-container');
@@ -90,6 +96,9 @@ function localize() {
 
     document.getElementById('barrier-proceed').alt = chrome.i18n.getMessage("close_warning");
     document.getElementById('barrier-proceed').title = chrome.i18n.getMessage("close_warning");
+
+    document.getElementById('barrier-homepage-link').innerHTML = chrome.i18n.getMessage("homepage");
+    document.getElementById('barrier-icons8-link').innerHTML = chrome.i18n.getMessage("icons8");
 }
 
 function showQuote() {
