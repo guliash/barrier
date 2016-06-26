@@ -30,10 +30,10 @@ portApi.onMessage.addListener(function(msg) {
     }
 });
 
-var leftIconMouseOut = chrome.extension.getURL('images/ic_keyboard_arrow_left_white_56.png');
-var rightIconMouseOut = chrome.extension.getURL('images/ic_keyboard_arrow_right_white_56.png');
-var leftIconMouseOver = chrome.extension.getURL('images/ic_keyboard_arrow_left_grey_56.png');
-var rightIconMouseOver = chrome.extension.getURL('images/ic_keyboard_arrow_right_grey_56.png');
+var prevQuoteIconMouseOut = chrome.extension.getURL('images/ic_keyboard_arrow_left_white_56.png');
+var nextQuoteIconMouseOut = chrome.extension.getURL('images/ic_keyboard_arrow_right_white_56.png');
+var prevQuoteIconMouseOver = chrome.extension.getURL('images/ic_keyboard_arrow_left_grey_56.png');
+var nextQuoteIconMouseOver = chrome.extension.getURL('images/ic_keyboard_arrow_right_grey_56.png');
 
 var leaveIconMouseOut = chrome.extension.getURL('images/angel-light-96.png');
 var leaveIconMouseOver = chrome.extension.getURL('images/angel-96.png');
@@ -45,7 +45,7 @@ var body =
     <div class="barrier-mid-top-panel"> \
         <div class="barrier-left-column"> \
             <div class="barrier-img-container"> \
-                <img id="barrier-left-arrow" src="' + leftIconMouseOut + '"> \
+                <img id="barrier-prev-quote" src="' + prevQuoteIconMouseOut + '"> \
             </div> \
         </div> \
         <div class="barrier-mid-column"> \
@@ -58,7 +58,7 @@ var body =
         </div> \
         <div class="barrier-right-column"> \
             <div class="barrier-img-container"> \
-                <img id="barrier-right-arrow" src="' + rightIconMouseOut + '"> \
+                <img id="barrier-next-quote" src="' + nextQuoteIconMouseOut + '"> \
             </div> \
         </div> \
     </div> \
@@ -66,8 +66,8 @@ var body =
         <div class="barrier-left-column"> \
         </div> \
         <div class="barrier-mid-column"> \
-            <img id="barrier-check" class="barrier-leave" src="' + leaveIconMouseOut + '"> \
-            <img id="barrier-cancel" class="barrier-proceed" src="' + proceedIconMouseOut + '"> \
+            <img id="barrier-leave" class="barrier-leave" src="' + leaveIconMouseOut + '"> \
+            <img id="barrier-proceed" class="barrier-proceed" src="' + proceedIconMouseOut + '"> \
         </div> \
         <div class="barrier-right-column"> \
         </div> \
@@ -77,6 +77,20 @@ var body =
 var mainContainer = _createElement('div', 'barrier-main-container');
 
 mainContainer.innerHTML = body;
+
+function localize() {
+    document.getElementById('barrier-prev-quote').alt = chrome.i18n.getMessage("prev_quote");
+    document.getElementById('barrier-prev-quote').title = chrome.i18n.getMessage("prev_quote");
+
+    document.getElementById('barrier-next-quote').alt = chrome.i18n.getMessage("next_quote");
+    document.getElementById('barrier-next-quote').title = chrome.i18n.getMessage("next_quote");
+
+    document.getElementById('barrier-leave').alt = chrome.i18n.getMessage("leave_site");
+    document.getElementById('barrier-leave').title = chrome.i18n.getMessage("leave_site");
+
+    document.getElementById('barrier-proceed').alt = chrome.i18n.getMessage("close_warning");
+    document.getElementById('barrier-proceed').title = chrome.i18n.getMessage("close_warning");
+}
 
 function showQuote() {
     var quote = _quotes[_currentQuote];
@@ -89,7 +103,8 @@ function showQuoteMessage(quote) {
 }
 
 function showQuoteAuthor(quote) {
-    var str = (quote.author ? '(' + quote.author + ')' : '(' + 'ANONYMOUS' + ')');
+    var str = (quote.author ? quote.author : chrome.i18n.getMessage("unknown_author"));
+    str = '(' + str + ')';
     document.getElementById('barrier-author').innerHTML = str;
 }
 
@@ -104,22 +119,24 @@ function showWarning(site) {
 
     document.body.appendChild(mainContainer);
 
+    localize();
+
     showQuote();
 
-    var leftBtn = document.getElementById('barrier-left-arrow');
-    var rightBtn = document.getElementById('barrier-right-arrow');
-    var checkBtn = document.getElementById('barrier-check');
-    var cancelBtn = document.getElementById('barrier-cancel');
+    var prevBtn = document.getElementById('barrier-prev-quote');
+    var nextBtn = document.getElementById('barrier-next-quote');
+    var leaveBtn = document.getElementById('barrier-leave');
+    var proceedBtn = document.getElementById('barrier-proceed');
 
-    leftBtn.addEventListener("click", function() {
+    prevBtn.addEventListener("click", function() {
         changeQuote(-1);
     });
 
-    rightBtn.addEventListener("click", function() {
+    nextBtn.addEventListener("click", function() {
         changeQuote(1);
     });
 
-    cancelBtn.addEventListener("click", function() {
+    proceedBtn.addEventListener("click", function() {
         document.body.removeChild(mainContainer);
         for(var i = 0; i < _blockedSites.length; i++) {
             if(_blockedSites[i].domain == site.domain) {
@@ -129,40 +146,40 @@ function showWarning(site) {
         portStorage.postMessage({ type: 'save', data: { blockedSites: _blockedSites } });
     });
 
-    checkBtn.addEventListener("click", function() {
+    leaveBtn.addEventListener("click", function() {
         window.location.href = "http://www.google.com/";
     });
 
-    leftBtn.addEventListener('mouseover', function() {
-        leftBtn.src = leftIconMouseOver;
+    prevBtn.addEventListener('mouseover', function() {
+        prevBtn.src = prevQuoteIconMouseOver;
     });
 
-    rightBtn.addEventListener('mouseover', function() {
-        rightBtn.src = rightIconMouseOver;
+    nextBtn.addEventListener('mouseover', function() {
+        nextBtn.src = nextQuoteIconMouseOver;
     });
 
-    leftBtn.addEventListener('mouseout', function() {
-        leftBtn.src = leftIconMouseOut;
+    prevBtn.addEventListener('mouseout', function() {
+        prevBtn.src = prevQuoteIconMouseOut;
     });
 
-    rightBtn.addEventListener('mouseout', function() {
-        rightBtn.src = rightIconMouseOut;
+    nextBtn.addEventListener('mouseout', function() {
+        nextBtn.src = nextQuoteIconMouseOut;
     });
 
-    checkBtn.addEventListener('mouseover', function() {
-        checkBtn.src = leaveIconMouseOver;
+    leaveBtn.addEventListener('mouseover', function() {
+        leaveBtn.src = leaveIconMouseOver;
     });
 
-    checkBtn.addEventListener('mouseout', function() {
-        checkBtn.src = leaveIconMouseOut;
+    leaveBtn.addEventListener('mouseout', function() {
+        leaveBtn.src = leaveIconMouseOut;
     });
 
-    cancelBtn.addEventListener('mouseover', function() {
-        cancelBtn.src = proceedIconMouseOver;
+    proceedBtn.addEventListener('mouseover', function() {
+        proceedBtn.src = proceedIconMouseOver;
     });
 
-    cancelBtn.addEventListener('mouseout', function() {
-        cancelBtn.src = proceedIconMouseOut;
+    proceedBtn.addEventListener('mouseout', function() {
+        proceedBtn.src = proceedIconMouseOut;
     });
 
 }
@@ -281,6 +298,5 @@ function timeToUnit(time, fromUnit, toUnit) {
     var millis = timeToMillis(time, fromUnit);
     return millisToUnit(millis, toUnit);
 }
-
 
 portStorage.postMessage({ type: 'get' });

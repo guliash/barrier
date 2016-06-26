@@ -71,13 +71,14 @@
 .barrier-message {
     font-family: "Times New Roman", Times, serif;
     font-size: 22pt;
-    color: rgba(255,255,255,.9);
+    color: rgba(255,255,255,.7);
     word-wrap: break-word;
+    font-style: italic;
 }
 
 .barrier-author {
     font-family: "Times New Roman", Times, serif;
-    font-style: italic;
+
     font-size: 22pt;
     color: rgba(255,255,255,.7);
     word-wrap: break-word;

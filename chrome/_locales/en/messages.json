@@ -2,8 +2,11 @@
     "extName": {
         "message": "The Barrier"
     },
+    "extDesc": {
+        "message": "The last barrier between your will and your addictions"
+    },
     "options_time_label": {
-        "message": "When to show next time after closing the warning?"
+        "message": "When to show next time after closing the warning (in minutes)?"
     },
     "options_add_button": {
         "message": "Add site"
@@ -19,5 +22,20 @@
     },
     "options_saved": {
         "message": "Options saved"
+    },
+    "prev_quote": {
+        "message": "Previous quote"
+    },
+    "next_quote": {
+        "message": "Next quote"
+    },
+    "leave_site": {
+        "message": "Leave"
+    },
+    "close_warning": {
+        "message": "Close the warning"
+    },
+    "unknown_author": {
+        "message": "An unknown author"
     }
 }
