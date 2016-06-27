@@ -81,7 +81,7 @@ var body =
 </div>';
 
 var mainContainer = _createElement('div', 'barrier-main-container');
-
+mainContainer.id = 'barrier-main-container';
 mainContainer.innerHTML = body;
 
 function localize() {
@@ -123,6 +123,10 @@ function changeQuote(dir) {
 }
 
 function showWarning(site) {
+
+    if(document.getElementById('barrier-main-container')) {
+        return;
+    }
 
     shuffle(_quotes);
 
