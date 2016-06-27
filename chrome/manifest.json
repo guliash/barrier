@@ -2,7 +2,7 @@
     "name": "__MSG_extName__",
     "manifest_version": 2,
     "description": "__MSG_extDesc__",
-    "version": "1.0",
+    "version": "1.0.0",
     "default_locale": "ru",
     "content_scripts": [
         {
@@ -11,6 +11,10 @@
             "js": ["js/content_script.js"]
         }
     ],
+    "icons": {
+        "48": "images/logo-48.png",
+        "128": "images/logo-128.png"
+    },
     "background": {
         "scripts": ["js/event_page.js"],
         "persistent": false
