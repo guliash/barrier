@@ -80,10 +80,6 @@ var body =
     </div> \
 </div>';
 
-var mainContainer = _createElement('div', 'barrier-main-container');
-mainContainer.id = 'barrier-main-container';
-mainContainer.innerHTML = body;
-
 function localize() {
     document.getElementById('barrier-prev-quote').alt = chrome.i18n.getMessage("prev_quote");
     document.getElementById('barrier-prev-quote').title = chrome.i18n.getMessage("prev_quote");
@@ -128,6 +124,10 @@ function showWarning(site) {
         return;
     }
 
+    var mainContainer = _createElement('div', 'barrier-main-container');
+    mainContainer.id = 'barrier-main-container';
+    mainContainer.innerHTML = body;
+
     shuffle(_quotes);
 
     document.body.appendChild(mainContainer);
@@ -150,7 +150,7 @@ function showWarning(site) {
     });
 
     proceedBtn.addEventListener("click", function() {
-        document.body.removeChild(mainContainer);
+        document.body.removeChild(document.getElementById('barrier-main-container'));
         for(var i = 0; i < _blockedSites.length; i++) {
             if(_blockedSites[i].domain == site.domain) {
                 _blockedSites[i].lastClosed = getTimestamp(TimeEnum.MILLIS);
