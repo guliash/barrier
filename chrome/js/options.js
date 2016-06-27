@@ -51,6 +51,7 @@ function _createElement() {
 }
 
 function localize() {
+    document.title = chrome.i18n.getMessage('options_title');
     document.getElementById('barrier-time-label').textContent = chrome.i18n.getMessage("options_time_label");
     document.getElementById('barrier-add').textContent = chrome.i18n.getMessage("options_add_button");
     document.getElementById('barrier-save').textContent = chrome.i18n.getMessage("options_save_button");

@@ -23,6 +23,9 @@
     "options_saved": {
         "message": "Options saved"
     },
+    "options_title": {
+        "message": "Barrier settings"
+    },
     "prev_quote": {
         "message": "Previous quote"
     },

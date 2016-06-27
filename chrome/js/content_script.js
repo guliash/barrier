@@ -108,9 +108,11 @@ function showQuoteMessage(quote) {
 }
 
 function showQuoteAuthor(quote) {
-    var str = (quote.author ? quote.author : chrome.i18n.getMessage("unknown_author"));
-    str = '(' + str + ')';
-    document.getElementById('barrier-author').innerHTML = str;
+    if(!quote.author) {
+        document.getElementById('barrier-author').innerHTML = '';
+        return;
+    }
+    document.getElementById('barrier-author').innerHTML = '(' + quote.author + ')';
 }
 
 function changeQuote(dir) {

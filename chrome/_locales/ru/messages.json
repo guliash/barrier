@@ -23,6 +23,9 @@
     "options_saved": {
         "message": "Настройки сохранены"
     },
+    "options_title": {
+        "message": "Настройки барьера"
+    },
     "prev_quote": {
         "message": "Предыдущая цитата"
     },
