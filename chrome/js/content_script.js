@@ -74,7 +74,7 @@ var body =
     </div> \
     <div class="barrier-footer"> \
         <p>\
-            <a href="https://guliash.com/barrier" id="barrier-homepage-link"></a>\
+            <a href="https://guliash.com/barrier/site" id="barrier-homepage-link"></a>\
             <a href="https://icons8.com" id="barrier-icons8-link"></a>\
         </p> \
     </div> \
