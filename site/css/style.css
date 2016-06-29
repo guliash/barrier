@@ -1,0 +1,18 @@
+.main {
+    padding: 10px;
+}
+body {
+    background-color: #E8EAF6;
+    color: rgba(0,0,0,.8);
+}
+
+p {
+    padding-left: 10px;
+}
+
+.img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
